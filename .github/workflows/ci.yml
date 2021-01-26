@@ -12,6 +12,7 @@ jobs:
     strategy:
       matrix:
         ruby-version: [2.2.10, 2.3.0, 2.3.8, 2.4.5, 2.5.3, 2.6.0]
+        bundler-version: 'default'
         gemfile:
           - gemfiles/rails42.gemfile
           - gemfiles/rails50.gemfile
@@ -32,6 +33,9 @@ jobs:
           - gemfile: gemfiles/rails60.gemfile
             ruby-version: 2.4.5
         include:
+          - gemfile: gemfiles/rails52.gemfile
+            ruby-version: 2.3.0
+            bundler-version: '1'
           - gemfile: gemfiles/rails41.gemfile
             ruby-version: 2.3.0
           - gemfile: gemfiles/rails41.gemfile
@@ -67,6 +71,7 @@ jobs:
         uses: ruby/setup-ruby@v1
         if: ${{ matrix.ruby-version != '2.0.0' }}
         with:
+          bundler: ${{ matrix.bundler-version }}
           ruby-version: ${{ matrix.ruby-version }}
 
       - name: Setup Ruby 2.0.0
